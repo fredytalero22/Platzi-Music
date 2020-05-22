@@ -1,11 +1,16 @@
 {
-    "extends": ["Vue", "standard"],
-
-    "rules":{
-        "no-new": 0
+    "extends": [
+      "standard",
+      "plugin:vue/essential"],
+    "rules": {
+      "no-new":0
     },
-
-    "parser": "babel-eslint",
-
-    "plugins": ["html", "vue"]
-}
+    "parserOptions": {
+      "ecmaVersion": 2018
+    },
+    "env": {
+      "node": true,
+      "es6": true
+    },
+    "plugins" : ["vue", "html"]
+  }

@@ -19,9 +19,9 @@
 
 <script>
 const tracks = [
-  {name: 'Muchacha', artist: 'Luis Alberto Spinetta'},
-  {name: 'Hoy aca en el baile', artist: 'El pepo'},
-  {name: 'I was made for loving', artist: 'Kiss'}
+  { name: 'Muchacha', artist: 'Luis Alberto Spinetta' },
+  { name: 'Hoy aca en el baile', artist: 'El pepo' },
+  { name: 'I was made for loving', artist: 'Kiss' }
 ]
 export default {
   name: 'app',
@@ -32,15 +32,15 @@ export default {
     }
   },
 
-  methods:{
-    search(){
-      console.log(this.searchQuery);
-      this.tracks = tracks;
+  methods: {
+    search () {
+      console.log(this.searchQuery)
+      this.tracks = tracks
     }
   },
 
   computed: {
-    searchMessage(){
+    searchMessage () {
       return `Encontrados: ${this.tracks.length}`
     }
   }
