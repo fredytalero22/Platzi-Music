@@ -18,7 +18,10 @@
       .container.results
         .columns.is-multiline
           .column.is-one-quarter(v-for="t in tracks")
-            pm-track(:track="t")
+            pm-track(
+              :track="t",
+              @select="setSelectedTrack",
+              :class="{'is-active' : t.id === selectedTrack}")
     pm-footer
 </template>
 
@@ -35,7 +38,8 @@ export default {
     return {
       searchQuery: '',
       tracks: [],
-      isLoading: false
+      isLoading: false,
+      selectedTrack: ''
     }
   },
 
@@ -57,6 +61,9 @@ export default {
           this.tracks = res.tracks.items
           this.isLoading = false
         })
+    },
+    setSelectedTrack (id) {
+      this.selectedTrack = id
     }
   },
 
@@ -74,5 +81,9 @@ export default {
 
   .results {
     margin-top: 50px;
+  }
+
+  .is-active{
+    border: 3px solid #3298dc;
   }
 </style>

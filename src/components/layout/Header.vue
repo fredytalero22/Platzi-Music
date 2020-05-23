@@ -1,5 +1,5 @@
 <template lang="pug">
-    section.hero.is-success
+    section.hero.is-info
         .hero-head
             header.nav
                 .container
