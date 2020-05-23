@@ -10,19 +10,18 @@
           )
           a.button.is-info.is-large(@click="search") Buscar
           a.button.is-danger.is-large &times;
-          p
-            small {{searchMessage}}
       .container
+        p
+          small {{searchMessage}}
+      .container.results
         .columns
-          .column(v-for="t in tracks") {{t.name}} - {{t.artist}}
+          .column(v-for="t in tracks")
+            | {{t.name}} - {{t.artists[0].name}}
 </template>
 
 <script>
-const tracks = [
-  { name: 'Muchacha', artist: 'Luis Alberto Spinetta' },
-  { name: 'Hoy aca en el baile', artist: 'El pepo' },
-  { name: 'I was made for loving', artist: 'Kiss' }
-]
+import trackService from './services/track'
+
 export default {
   name: 'app',
   data () {
@@ -34,8 +33,12 @@ export default {
 
   methods: {
     search () {
-      console.log(this.searchQuery)
-      this.tracks = tracks
+      if (!this.searchQuery) { return }
+
+      trackService.search(this.searchQuery)
+        .then(res => {
+          this.tracks = res.tracks.items
+        })
     }
   },
 
@@ -49,5 +52,9 @@ export default {
 </script>
 
 <style lang="scss">
-  @import './scss/main.scss'
+  @import './scss/main.scss';
+
+  .results {
+    margin-top: 50px;
+  }
 </style>
