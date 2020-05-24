@@ -1,8 +1,9 @@
 <template lang="pug">
   #app
     pm-header
-    pm-notification(v-show="showNotification")
-      p(slot="body") No se encontraron resultados
+    pm-notification(v-show="showNotification", :foundNotification="foundNotification")
+      p(slot="body", v-show="!foundNotification") No se encontraron resultados
+      p(slot="body", v-show="foundNotification") Se encontraron {{totalSearch}} concidencias
     pm-loader(v-show="isLoading")
     section.section(v-show="!isLoading")
       nav.nav.has-shadow
@@ -43,7 +44,8 @@ export default {
       tracks: [],
       isLoading: false,
       selectedTrack: '',
-      showNotification: ''
+      showNotification: '',
+      totalSearch: 0
     }
   },
 
@@ -63,9 +65,10 @@ export default {
 
       trackService.search(this.searchQuery)
         .then(res => {
-          this.showNotification = res.tracks.total === 0
+          this.showNotification = true
           this.tracks = res.tracks.items
           this.isLoading = false
+          this.totalSearch = res.tracks.total
         })
     },
     setSelectedTrack (id) {
@@ -76,6 +79,9 @@ export default {
   computed: {
     searchMessage () {
       return `Encontrados: ${this.tracks.length}`
+    },
+    foundNotification () {
+      return this.totalSearch > 0
     }
   },
 
@@ -84,7 +90,7 @@ export default {
       if (this.showNotification) {
         setTimeout(() => {
           this.showNotification = false
-        }, 3000)
+        }, 5000)
       }
     }
   }
